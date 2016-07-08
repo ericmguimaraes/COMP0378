@@ -1,3 +1,5 @@
+package lab1;
+
 /**
  * Created by ericm on 06-Jul-16.
  */
