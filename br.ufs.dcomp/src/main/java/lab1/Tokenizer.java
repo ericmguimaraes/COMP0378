@@ -1,8 +1,6 @@
 package lab1;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ericm on 08-Jul-16.
@@ -14,7 +12,10 @@ public class Tokenizer {
             throw new RuntimeException("No lines to analyze");
         HashMap<String,Long> hashMap = getHashMap(lines);
         List<Token> tokens = new ArrayList<Token>();
-        hashMap.forEach((k,v) -> tokens.add(new Token(k,v)));
+        hashMap.forEach((k,v) -> {if(!k.equals(""))tokens.add(new Token(k,v));});
+        Comparator<Token> byCounter = (t1, t2) -> Long.compare(t1.getCounter(), t2.getCounter());
+        tokens.sort(byCounter);
+        Collections.reverse(tokens);
         return tokens;
     }
 
