@@ -1,6 +1,8 @@
 package lab1.util;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,7 +14,13 @@ import java.util.List;
 public class FileManager {
 
     public List<String> readFile(String filename) throws IOException {
-        return Files.readAllLines(Paths.get(filename));
+        List<String> lines;
+        try {
+            lines=Files.readAllLines(Paths.get(filename), Charset.forName("Cp1252"));
+        } catch (MalformedInputException e){
+            lines=Files.readAllLines(Paths.get(filename));
+        }
+        return lines;
     }
 
     public boolean writeToFile(String filename, List<String> lines) throws IOException {
