@@ -21,8 +21,8 @@
     <bytecodeTargetLevel>
       <module name="br.ufs.dcomp.lab1_main" target="1.5" />
       <module name="br.ufs.dcomp.lab1_test" target="1.5" />
-      <module name="br.ufs.dcomp_main" target="1.5" />
-      <module name="br.ufs.dcomp_test" target="1.5" />
+      <module name="br.ufs.dcomp_main" target="1.8" />
+      <module name="br.ufs.dcomp_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
