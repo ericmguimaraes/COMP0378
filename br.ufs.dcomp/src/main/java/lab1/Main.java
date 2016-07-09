@@ -19,7 +19,7 @@ public class Main {
         Tokenizer tokenizer = new Tokenizer();
         EntityRecognition entityRecognition = new EntityRecognition();
         List<String> lines = fileManager.readFile(args[0]);
-        entityRecognition.regexFinder(lines);
+        lines = entityRecognition.regexFinder(lines);
         List<Token> tokens = tokenizer.linesToToken(lines);
         tokens.forEach(token -> {
             System.out.println(token.toString());

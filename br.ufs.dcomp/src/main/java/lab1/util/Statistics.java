@@ -1,21 +1,23 @@
 package lab1.util;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by ericm on 08-Jul-16.
  */
 public class Statistics {
 
-    private long positives;
+    private double positives;
 
-    private long negatives;
+    private double negatives;
 
-    private long truePositives;
+    private double truePositives;
 
-    private long falsePositives;
+    private double falsePositives;
 
-    private long trueNegatives;
+    private double trueNegatives;
 
-    private long falseNegatives;
+    private double falseNegatives;
 
 
     public Statistics(long positives, long negatives, long truePositives, long falsePositives, long trueNegatives, long falseNegatives) {
@@ -27,28 +29,29 @@ public class Statistics {
         this.falseNegatives = falseNegatives;
     }
 
-    public float getRecall(){
-        return truePositives / (truePositives+falsePositives);
+    public double getRecall(){
+        return (truePositives / (truePositives+falsePositives)) * 100;
     }
 
-    public float getPrecision(){
-        return truePositives / (truePositives+falseNegatives);
+    public double getPrecision(){
+        return (truePositives / (truePositives+falseNegatives)) * 100;
     }
 
-    public float getSensitivity(){
-        return trueNegatives / (truePositives+falseNegatives);
+    public double getSensitivity(){
+        return trueNegatives / (truePositives+falseNegatives) * 100;
     }
 
-    public float getSpecificity(){
-        return trueNegatives / (falsePositives+trueNegatives);
+    public double getSpecificity(){
+        return trueNegatives / (falsePositives+trueNegatives) * 100;
     }
 
-    public float getAccuracy(){
-        return (truePositives+trueNegatives)/ (positives+negatives);
+    public double getAccuracy(){
+        return (truePositives+trueNegatives)/ (positives+negatives) * 100;
     }
 
     public void printRecallAndPrecision(){
-        System.out.println("Recall: "+getRecall()*100+"% Precision:"+getPrecision()*100+"%");
+        DecimalFormat df = new DecimalFormat("#.00");
+        System.out.println("Recall: "+df.format(getRecall())+"% Precision:"+df.format(getPrecision())+"%");
     }
 
 }
