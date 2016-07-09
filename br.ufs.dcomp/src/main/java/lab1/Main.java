@@ -14,7 +14,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-     /*   if(args.length==0)
+        if(args.length==0)
             throw new IllegalArgumentException("Informe o nome do arquivo a ser analizado.");
         FileManager fileManager = new FileManager();
         Tokenizer tokenizer = new Tokenizer();
@@ -25,13 +25,6 @@ public class Main {
         tokens.forEach(token -> {
             System.out.println(token.toString());
         });
-     */
-        EntityRecognition test = new EntityRecognition();
-        try {
-            System.out.println(test.Stremmer("carro"));
-        } catch (PTStemmerException e) {
-            e.printStackTrace();
-        }
     }
 
 }

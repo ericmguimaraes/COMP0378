@@ -3,13 +3,18 @@ package lab1.tools;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import dictionary.DictionaryLoadException;
-import org.xml.sax.SAXException;
+import org.cogroo.text.Token;
+
+import org.cogroo.text.impl.TokenImpl;
 import ptstemmer.exceptions.PTStemmerException;
 import ptstemmer.*;
+
+import dictionary.DictionaryLoadException;
+import org.xml.sax.SAXException;
 import lemma.LemmatizeException;
 import lemma.Lemmatizer;
 import rank.WordRankingLoadException;
@@ -65,13 +70,18 @@ public class EntityRecognition {
         return Strem;
     }
 
-    public String Lemmatizer (String token) throws LemmatizeException, ParserConfigurationException, WordRankingLoadException, SAXException, DictionaryLoadException, IOException {
+    public String Lemmatizer (String token)
+            throws LemmatizeException, ParserConfigurationException, WordRankingLoadException, SAXException, DictionaryLoadException, IOException {
         String[] tags = {"v-fin", "art", "n", "art", "n", "adj", "punc", "v-fin",
                 "n", "conj-c", "v-fin", "n", "punc"};
         Lemmatizer lemmatizer = new Lemmatizer();
         String lemma = lemmatizer.lemmatize(token, tags);
 
         return lemma;
+    }
+
+    public String getLemma (String token) {
+
     }
 
 }
