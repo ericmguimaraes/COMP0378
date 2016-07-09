@@ -1,5 +1,6 @@
 package lab1;
 
+import lab1.tools.EntityRecognition;
 import lab1.util.FileManager;
 
 import java.io.File;
@@ -16,7 +17,10 @@ public class Main {
             throw new IllegalArgumentException("Informe o nome do arquivo a ser analizado.");
         FileManager fileManager = new FileManager();
         Tokenizer tokenizer = new Tokenizer();
-        List<Token> tokens = tokenizer.linesToToken(fileManager.readFile(args[0]));
+        EntityRecognition entityRecognition = new EntityRecognition();
+        List<String> lines = fileManager.readFile(args[0]);
+        entityRecognition.regexFinder(lines);
+        List<Token> tokens = tokenizer.linesToToken(lines);
         tokens.forEach(token -> {
             System.out.println(token.toString());
         });
