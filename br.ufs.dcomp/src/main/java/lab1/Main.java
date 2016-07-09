@@ -2,6 +2,7 @@ package lab1;
 
 import lab1.tools.EntityRecognition;
 import lab1.util.FileManager;
+import ptstemmer.exceptions.PTStemmerException;
 
 import java.io.IOException;
 import java.util.List;

@@ -2,8 +2,10 @@ package lab1.tools;
 
 import lab1.util.Statistics;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,8 +74,10 @@ public class EntityRecognition {
 
         return Strem;
     }
-/*
-    public String Lemmatizer (String token) throws LemmatizeException, ParserConfigurationException, WordRankingLoadException, SAXException, DictionaryLoadException, IOException {
+
+    /*
+    public String Lemmatizer (String token)
+            throws LemmatizeException, ParserConfigurationException, WordRankingLoadException, SAXException, DictionaryLoadException, IOException {
         String[] tags = {"v-fin", "art", "n", "art", "n", "adj", "punc", "v-fin",
                 "n", "conj-c", "v-fin", "n", "punc"};
         Lemmatizer lemmatizer = new Lemmatizer();
@@ -82,6 +86,9 @@ public class EntityRecognition {
         return lemma;
     }
 
+    public String getLemma (String token) {
+
+    }
     */
 
 }
