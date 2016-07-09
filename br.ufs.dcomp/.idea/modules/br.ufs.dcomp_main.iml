@@ -9,5 +9,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="PTStemmer" level="project" />
+    <orderEntry type="library" name="lemport-0.9.4" level="project" />
   </component>
 </module>

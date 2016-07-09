@@ -1,9 +1,20 @@
 package lab1.tools;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import dictionary.DictionaryLoadException;
+import org.xml.sax.SAXException;
+import ptstemmer.exceptions.PTStemmerException;
+import ptstemmer.*;
+import lemma.LemmatizeException;
+import lemma.Lemmatizer;
+import rank.WordRankingLoadException;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by Ariel on 08-Jul-16.
@@ -13,7 +24,7 @@ public class EntityRecognition {
 
     // Pattern array
     private final List<Pattern> patterns = new ArrayList<Pattern>();
-    private int numbersFounded = 0;
+    private int entitiesFounded = 0;
 
     public int regexFinder(List<String> lines) {
 
@@ -30,19 +41,37 @@ public class EntityRecognition {
                 if (regexMatcher != null) {
                     while (regexMatcher.find()) {
                         for (int i = 0; i < regexMatcher.groupCount(); i++) {
-                            System.out.println(regexMatcher.group(i));
-                            ++numbersFounded;
+                            ++entitiesFounded;
                         }
                     }
                 }
             }
         }
-        System.out.println(numbersFounded);
-        return numbersFounded;
+        return entitiesFounded;
     }
 
-    public int lematizacao(List<String> lines) {
+    public String Stremmer(String word) throws PTStemmerException {
 
-        return 0;
+        /**
+         * Using PTStemmer - A Stemming toolkit for the Portuguese language (C) 2008-2010 Pedro Oliveira
+         *PTStemmer is free software.
+         */
+
+        Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
+        st.enableCaching(1000);
+        st.ignore("a","e");
+        String Strem = st.getWordStem(word);
+
+        return Strem;
     }
+
+    public String Lemmatizer (String token) throws LemmatizeException, ParserConfigurationException, WordRankingLoadException, SAXException, DictionaryLoadException, IOException {
+        String[] tags = {"v-fin", "art", "n", "art", "n", "adj", "punc", "v-fin",
+                "n", "conj-c", "v-fin", "n", "punc"};
+        Lemmatizer lemmatizer = new Lemmatizer();
+        String lemma = lemmatizer.lemmatize(token, tags);
+
+        return lemma;
+    }
+
 }
