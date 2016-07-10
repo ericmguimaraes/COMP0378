@@ -33,6 +33,33 @@ public class EntityRecognition {
     private List<String> stems = new ArrayList<String>();
     private List<String> foundedRegex = new ArrayList<String>();
 
+    public List<String> regexFinderNoLemmatizerNeitherStremer(List<String> lines) {
+        Matcher regexMatcher;
+        // Regex for all numbers format
+        patterns.add(Pattern.compile("((?:R\\$ )?\\d+(?:.\\d+)*(?:%| mil|º)?)"));
+        // Regex for names
+        patterns.add(Pattern.compile("(\\b[A-ZÀ-Ú]+[?:\\d+|[\\wà-úç']+]+\\b)"));
+
+        List<String> linesSubstitute = new ArrayList<>();
+        for (String line : lines) {
+            String lineAux = line;
+            for (Pattern pattern : patterns) {
+                regexMatcher = pattern.matcher(line);
+                if (regexMatcher != null) {
+                    while (regexMatcher.find()) {
+                        for (int i = 0; i < regexMatcher.groupCount(); i++) {
+                            foundedRegex.add(regexMatcher.group(i));
+                            lineAux = lineAux.replace(regexMatcher.group(i), "");
+                            ++entitiesFounded;
+                        }
+                    }
+                }
+            }
+            linesSubstitute.add(lineAux);
+        }
+        return linesSubstitute;
+    }
+
     public List<String> regexFinder(List<String> lines) {
 
         Matcher regexMatcher;
@@ -44,8 +71,10 @@ public class EntityRecognition {
         List<String> linesSubstitute = new ArrayList<>();
         for (String line : lines) {
             String lineAux = line;
+            System.out.println("Rodando Lemmatizer...");
             Lemmatizer(line); // Call Lemmatizer and catch lemmas
             try {
+                System.out.println("Rodando Stemmer...");
                 Stemmer(line); // Call Stemmer and catch stemme s
             } catch (PTStemmerException e) {
                 e.printStackTrace();
@@ -64,6 +93,9 @@ public class EntityRecognition {
             }
             linesSubstitute.add(lineAux);
         }
+
+        printLemmas();
+        printStems();
 
         return linesSubstitute;
     }
@@ -112,7 +144,7 @@ public class EntityRecognition {
         }
     }
 
-    public void PrintLemmas () {
+    public void printLemmas() {
         System.out.println("Lemas reconhecidos com CoGrOO");
         System.out.println("******************************************************************");
 
@@ -124,7 +156,7 @@ public class EntityRecognition {
         System.out.println("******************************************************************\n");
     }
 
-    public void PrintRegEx () {
+    public void printRegEx() {
 
         System.out.println("Numeros e Nomes Próprios Reconhecidos com RegEx");
         System.out.println("******************************************************************");
@@ -141,7 +173,7 @@ public class EntityRecognition {
         System.out.println("******************************************************************\n");
     }
 
-    public void PrintStems () {
+    public void printStems() {
         System.out.println("Stemmers reconhecidos com PTStemmer");
         System.out.println("******************************************************************");
 
