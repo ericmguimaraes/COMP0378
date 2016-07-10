@@ -63,11 +63,11 @@ public class EntityRecognition {
 
     public List<String> regexFinder(List<String> lines) throws PTStemmerException {
 
+        //junta todas as linhas em uma só para melhorar a performance do lemmatizer
         StringBuilder stringBuilder = new StringBuilder();
         lines.forEach(stringBuilder::append);
-
         lines.clear();
-        lines.add(stringBuilder.toString());
+        String text = stringBuilder.toString();
 
         Matcher regexMatcher;
         // Regex for all numbers format
@@ -75,61 +75,45 @@ public class EntityRecognition {
         // Regex for names
         patterns.add(Pattern.compile("(\\b[A-ZÀ-Ú]+[?:\\d+|[\\wà-úç']+]+\\b)"));
 
-        List<String> linesAfterRegex = new ArrayList<>();
-        for (String line : lines) {
-            String lineAux = line;
-            for (Pattern pattern : patterns) {
-                regexMatcher = pattern.matcher(line);
-                if (regexMatcher != null) {
-                    while (regexMatcher.find()) {
-                        for (int i = 0; i < regexMatcher.groupCount(); i++) {
-                            foundedRegex.add(regexMatcher.group(i));
-                            lineAux = lineAux.replace(regexMatcher.group(i), "")
-                                    .replace("(","")
-                                    .replace(")","")
-                                    .replace("!","")
-                                    .replace(".","")
-                                    .replace(",","")
-                                    .replace("?","")
-                                    .replace(":","")
-                                    .replace(";","")
-                                    .replace("\"","");
-                            ++entitiesFounded;
-                        }
+        text = text.replace("(","")
+                .replace(")","")
+                .replace("!","")
+                .replace(".","")
+                .replace(",","")
+                .replace("?","")
+                .replace(":","")
+                .replace(";","")
+                .replace("\"","");
+
+
+        for (Pattern pattern : patterns) {
+            regexMatcher = pattern.matcher(text);
+            if (regexMatcher != null)
+                while (regexMatcher.find()) {
+                    for (int i = 0; i < regexMatcher.groupCount(); i++) {
+                        foundedRegex.add(regexMatcher.group(i));
+                        text = text.replace(regexMatcher.group(i), "");
+                        ++entitiesFounded;
                     }
                 }
-            }
-            linesAfterRegex.add(lineAux);
         }
 
         printRegEx();
 
         System.out.println("Rodando lemmatizer...");
-        List<String> linesAfterLemmatizer = new ArrayList<>();
-        for (String line : linesAfterRegex) {
-            linesAfterLemmatizer.addAll(lemmatize(line)); // Call lemmatize and catch lemmas
-        }
-
-        printLemmas();
-
-        StringBuilder stringBuilder2 = new StringBuilder();
-        linesAfterLemmatizer.forEach(s -> stringBuilder2.append(s).append(" "));
-
-        linesAfterLemmatizer.clear();
-        linesAfterLemmatizer.add(stringBuilder2.toString());
+        String linesAfterLemmatizer = lemmatize(text); // Call lemmatize and catch lemmas
+        printLemmas(linesAfterLemmatizer);
 
         System.out.println("Rodando stemmer...");
-        List<String> linesAfterStemmer = new ArrayList<>();
-        for (String line : linesAfterLemmatizer) {
-            linesAfterStemmer.addAll(stemme(line)); // Call stemme and catch stemme s
-        }
+        String linesAfterStemmer = stemme(linesAfterLemmatizer);
+        printStems(linesAfterStemmer);
 
-        printStems();
-
-        return linesAfterStemmer;
+        List<String> returno = new ArrayList<>();
+        returno.add(linesAfterStemmer);
+        return returno;
     }
 
-    public List<String> stemme(String line) throws PTStemmerException {
+    public String stemme(String line) throws PTStemmerException {
 
         /**
          * Using PTStemmer - A Stemming toolkit for the Portuguese language (C) 2008-2010 Pedro Oliveira
@@ -141,12 +125,13 @@ public class EntityRecognition {
         st.ignore("a","e");
         String[] localStems = st.getPhraseStems(line);
         Collections.addAll(stems,localStems);
-        List<String> finalList = new ArrayList<>();
-        Collections.addAll(finalList,localStems);
-        return finalList;
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String s:localStems)
+            stringBuilder.append(s).append(" ");
+        return stringBuilder.toString();
     }
 
-    public List<String> lemmatize(String line) {
+    public String lemmatize(String line) {
 
         /**
          * Using CoGrOO - Corretor Gramatical para o LibreOffice - 2011 - CCSL/IME/USP
@@ -161,23 +146,28 @@ public class EntityRecognition {
 
         cogroo.analyze(document);
 
-        List<String> finalList = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
         for (Sentence sentence : document.getSentences()) { // lista de sentenças
             // Get Tokens from a text sentence
             for (Token token : sentence.getTokens()) { // lista de tokens
                 String[] localLemmas = token.getLemmas();
                 Collections.addAll(lemmas, localLemmas);
-                Collections.addAll(finalList, localLemmas);
+                for(String s:localLemmas)
+                    stringBuilder.append(s).append(" ");
             }
         }
-        return finalList;
+
+        return stringBuilder.toString();
     }
 
-    public void printLemmas() {
+    public void printLemmas(String lemmasString) {
         System.out.println("Lemas reconhecidos com CoGrOO");
         System.out.println("******************************************************************");
 
-        lemmas.forEach(System.out::println);
+        if(lemmasString!=null && !lemmasString.isEmpty())
+            System.out.println(lemmasString);
+        else
+            lemmas.forEach(System.out::println);
 
         System.out.println("END Lemmas Reconhecidos");
         System.out.println("Padrões encontrados: "+lemmas.size());
@@ -202,11 +192,14 @@ public class EntityRecognition {
         System.out.println("******************************************************************\n");
     }
 
-    public void printStems() {
+    public void printStems(String stemsString) {
         System.out.println("Stemmers reconhecidos com PTStemmer");
         System.out.println("******************************************************************");
 
-        stems.forEach(System.out::println);
+        if(stemsString!=null && !stemsString.isEmpty())
+            System.out.println(stemsString);
+        else
+            stems.forEach(System.out::println);
 
         System.out.println("END Stemmers Reconhecidos");
         System.out.println("Padrões encontrados: "+stems.size());
