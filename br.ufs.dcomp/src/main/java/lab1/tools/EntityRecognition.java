@@ -30,13 +30,12 @@ public class EntityRecognition {
     private final List<Pattern> patterns = new ArrayList<Pattern>();
     private int entitiesFounded = 0;
     private List<String> lemmas = new ArrayList<String>();
-    private List<String> stem = new ArrayList<String>();
+    private List<String> stems = new ArrayList<String>();
+    private List<String> foundedRegex = new ArrayList<String>();
 
     public List<String> regexFinder(List<String> lines) {
 
         Matcher regexMatcher;
-        System.out.println("Numeros e Nomes Próprios Reconhecidos");
-        System.out.println("******************************************************************");
         // Regex for all numbers format
         patterns.add(Pattern.compile("((?:R\\$ )?\\d+(?:.\\d+)*(?:%| mil|º)?)"));
         // Regex for names
@@ -56,7 +55,7 @@ public class EntityRecognition {
                 if (regexMatcher != null) {
                     while (regexMatcher.find()) {
                         for (int i = 0; i < regexMatcher.groupCount(); i++) {
-                            System.out.println(regexMatcher.group(i));
+                            foundedRegex.add(regexMatcher.group(i));
                             lineAux = lineAux.replace(regexMatcher.group(i), "");
                             ++entitiesFounded;
                         }
@@ -65,14 +64,7 @@ public class EntityRecognition {
             }
             linesSubstitute.add(lineAux);
         }
-        System.out.println("END Numeros e Nomes Próprios Reconhecidos");
-        System.out.println("Padrões encontrados: "+entitiesFounded);
-        System.out.println("Falsos positivos encontrados: 17");
 
-        Statistics stats = new Statistics(152, 629, 152, 17, 612, 0);
-        stats.printRecallAndPrecision();
-
-        System.out.println("******************************************************************");
         return linesSubstitute;
     }
 
@@ -87,7 +79,7 @@ public class EntityRecognition {
         st.enableCaching(1000);
         st.ignore("a","e");
         for (String stemAux : st.getPhraseStems(line)) {
-            stem.add(stemAux);
+            stems.add(stemAux);
         }
 
     }
@@ -120,5 +112,45 @@ public class EntityRecognition {
         }
     }
 
+    public void PrintLemmas () {
+        System.out.println("Lemas reconhecidos com CoGrOO");
+        System.out.println("******************************************************************");
+
+        lemmas.forEach(lemma -> {System.out.println(lemma.toString());});
+
+        System.out.println("END Lemmas Reconhecidos");
+        System.out.println("Padrões encontrados: "+lemmas.size());
+
+        System.out.println("******************************************************************\n");
+    }
+
+    public void PrintRegEx () {
+
+        System.out.println("Numeros e Nomes Próprios Reconhecidos com RegEx");
+        System.out.println("******************************************************************");
+
+        foundedRegex.forEach(text -> {System.out.println(text.toString());});
+
+        System.out.println("END Numeros e Nomes Próprios Reconhecidos");
+        System.out.println("Padrões encontrados: "+entitiesFounded);
+        System.out.println("Falsos positivos encontrados: 17");
+
+        Statistics stats = new Statistics(152, 629, 152, 17, 612, 0);
+        stats.printRecallAndPrecision();
+
+        System.out.println("******************************************************************\n");
+    }
+
+    public void PrintStems () {
+        System.out.println("Stemmers reconhecidos com PTStemmer");
+        System.out.println("******************************************************************");
+
+        stems.forEach(stem -> {System.out.println(stem);});
+
+        System.out.println("END Stemmers Reconhecidos");
+        System.out.println("Padrões encontrados: "+stems.size());
+
+        System.out.println("******************************************************************");
+    }
 
 }
