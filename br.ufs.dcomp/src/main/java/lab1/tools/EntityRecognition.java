@@ -3,6 +3,7 @@ package lab1.tools;
 import lab1.util.Statistics;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,7 +61,13 @@ public class EntityRecognition {
         return linesSubstitute;
     }
 
-    public List<String> regexFinder(List<String> lines) {
+    public List<String> regexFinder(List<String> lines) throws PTStemmerException {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        lines.forEach(stringBuilder::append);
+
+        lines.clear();
+        lines.add(stringBuilder.toString());
 
         Matcher regexMatcher;
         // Regex for all numbers format
@@ -68,39 +75,61 @@ public class EntityRecognition {
         // Regex for names
         patterns.add(Pattern.compile("(\\b[A-ZÀ-Ú]+[?:\\d+|[\\wà-úç']+]+\\b)"));
 
-        List<String> linesSubstitute = new ArrayList<>();
+        List<String> linesAfterRegex = new ArrayList<>();
         for (String line : lines) {
             String lineAux = line;
-            System.out.println("Rodando Lemmatizer...");
-            Lemmatizer(line); // Call Lemmatizer and catch lemmas
-            try {
-                System.out.println("Rodando Stemmer...");
-                Stemmer(line); // Call Stemmer and catch stemme s
-            } catch (PTStemmerException e) {
-                e.printStackTrace();
-            }
             for (Pattern pattern : patterns) {
                 regexMatcher = pattern.matcher(line);
                 if (regexMatcher != null) {
                     while (regexMatcher.find()) {
                         for (int i = 0; i < regexMatcher.groupCount(); i++) {
                             foundedRegex.add(regexMatcher.group(i));
-                            lineAux = lineAux.replace(regexMatcher.group(i), "");
+                            lineAux = lineAux.replace(regexMatcher.group(i), "")
+                                    .replace("(","")
+                                    .replace(")","")
+                                    .replace("!","")
+                                    .replace(".","")
+                                    .replace(",","")
+                                    .replace("?","")
+                                    .replace(":","")
+                                    .replace(";","")
+                                    .replace("\"","");
                             ++entitiesFounded;
                         }
                     }
                 }
             }
-            linesSubstitute.add(lineAux);
+            linesAfterRegex.add(lineAux);
+        }
+
+        printRegEx();
+
+        System.out.println("Rodando lemmatizer...");
+        List<String> linesAfterLemmatizer = new ArrayList<>();
+        for (String line : linesAfterRegex) {
+            linesAfterLemmatizer.addAll(lemmatize(line)); // Call lemmatize and catch lemmas
         }
 
         printLemmas();
+
+        StringBuilder stringBuilder2 = new StringBuilder();
+        linesAfterLemmatizer.forEach(s -> stringBuilder2.append(s).append(" "));
+
+        linesAfterLemmatizer.clear();
+        linesAfterLemmatizer.add(stringBuilder2.toString());
+
+        System.out.println("Rodando stemmer...");
+        List<String> linesAfterStemmer = new ArrayList<>();
+        for (String line : linesAfterLemmatizer) {
+            linesAfterStemmer.addAll(stemme(line)); // Call stemme and catch stemme s
+        }
+
         printStems();
 
-        return linesSubstitute;
+        return linesAfterStemmer;
     }
 
-    public void Stemmer(String line) throws PTStemmerException {
+    public List<String> stemme(String line) throws PTStemmerException {
 
         /**
          * Using PTStemmer - A Stemming toolkit for the Portuguese language (C) 2008-2010 Pedro Oliveira
@@ -110,13 +139,14 @@ public class EntityRecognition {
         Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
         st.enableCaching(1000);
         st.ignore("a","e");
-        for (String stemAux : st.getPhraseStems(line)) {
-            stems.add(stemAux);
-        }
-
+        String[] localStems = st.getPhraseStems(line);
+        Collections.addAll(stems,localStems);
+        List<String> finalList = new ArrayList<>();
+        Collections.addAll(finalList,localStems);
+        return finalList;
     }
 
-    public void Lemmatizer (String line) {
+    public List<String> lemmatize(String line) {
 
         /**
          * Using CoGrOO - Corretor Gramatical para o LibreOffice - 2011 - CCSL/IME/USP
@@ -131,17 +161,16 @@ public class EntityRecognition {
 
         cogroo.analyze(document);
 
+        List<String> finalList = new ArrayList<>();
         for (Sentence sentence : document.getSentences()) { // lista de sentenças
-            sentence.getStart(); sentence.getEnd(); // caracteres onde a sentença começa e termina
-            sentence.getText(); // texto da sentença
-
             // Get Tokens from a text sentence
             for (Token token : sentence.getTokens()) { // lista de tokens
-                for (String s : token.getLemmas())
-                    lemmas.add(s); // adiciona os possíveis lemas para o par lexeme+postag na lista
-                //System.out.println("Token: " + token.getLexeme() + " POSTag: " + token.getPOSTag() + " Features: " + token.getFeatures()); // classe morfológica de acordo com o contexto
-                }
+                String[] localLemmas = token.getLemmas();
+                Collections.addAll(lemmas, localLemmas);
+                Collections.addAll(finalList, localLemmas);
+            }
         }
+        return finalList;
     }
 
     public void printLemmas() {
