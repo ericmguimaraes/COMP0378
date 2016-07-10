@@ -2,15 +2,23 @@ package lab1.tools;
 
 import lab1.util.Statistics;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ptstemmer.exceptions.PTStemmerException;
 import ptstemmer.*;
+
+import org.cogroo.analyzer.*;
+import org.cogroo.analyzer.ComponentFactory;
+import org.cogroo.text.Document;
+import org.cogroo.text.Sentence;
+import org.cogroo.text.Token;
+import org.cogroo.text.impl.DocumentImpl;
+
 
 /**
  * Created by Ariel on 08-Jul-16.
@@ -21,6 +29,8 @@ public class EntityRecognition {
     // Pattern array
     private final List<Pattern> patterns = new ArrayList<Pattern>();
     private int entitiesFounded = 0;
+    private List<String> lemmas = new ArrayList<String>();
+    private List<String> stem = new ArrayList<String>();
 
     public List<String> regexFinder(List<String> lines) {
 
@@ -35,6 +45,12 @@ public class EntityRecognition {
         List<String> linesSubstitute = new ArrayList<>();
         for (String line : lines) {
             String lineAux = line;
+            Lemmatizer(line); // Call Lemmatizer and catch lemmas
+            try {
+                Stemmer(line); // Call Stemmer and catch stemme s
+            } catch (PTStemmerException e) {
+                e.printStackTrace();
+            }
             for (Pattern pattern : patterns) {
                 regexMatcher = pattern.matcher(line);
                 if (regexMatcher != null) {
@@ -60,35 +76,49 @@ public class EntityRecognition {
         return linesSubstitute;
     }
 
-    public String Stremmer(String word) throws PTStemmerException {
+    public void Stemmer(String line) throws PTStemmerException {
 
         /**
          * Using PTStemmer - A Stemming toolkit for the Portuguese language (C) 2008-2010 Pedro Oliveira
-         *PTStemmer is free software.
+         * PTStemmer is free software.
          */
 
         Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
         st.enableCaching(1000);
         st.ignore("a","e");
-        String Strem = st.getWordStem(word);
-
-        return Strem;
-    }
-
-    /*
-    public String Lemmatizer (String token)
-            throws LemmatizeException, ParserConfigurationException, WordRankingLoadException, SAXException, DictionaryLoadException, IOException {
-        String[] tags = {"v-fin", "art", "n", "art", "n", "adj", "punc", "v-fin",
-                "n", "conj-c", "v-fin", "n", "punc"};
-        Lemmatizer lemmatizer = new Lemmatizer();
-        String lemma = lemmatizer.lemmatize(token, tags);
-
-        return lemma;
-    }
-
-    public String getLemma (String token) {
+        for (String stemAux : st.getPhraseStems(line)) {
+            stem.add(stemAux);
+        }
 
     }
-    */
+
+    public void Lemmatizer (String line) {
+
+        /**
+         * Using CoGrOO - Corretor Gramatical para o LibreOffice - 2011 - CCSL/IME/USP
+         * CoGrOO is free software.
+         */
+
+        ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
+        Analyzer cogroo = factory.createPipe();
+
+        Document document = new DocumentImpl();
+        document.setText(line);
+
+        cogroo.analyze(document);
+
+        for (Sentence sentence : document.getSentences()) { // lista de sentenças
+            sentence.getStart(); sentence.getEnd(); // caracteres onde a sentença começa e termina
+            sentence.getText(); // texto da sentença
+
+            // Get Tokens from a text sentence
+            for (Token token : sentence.getTokens()) { // lista de tokens
+                for (String s : token.getLemmas())
+                    lemmas.add(s); // adiciona os possíveis lemas para o par lexeme+postag na lista
+                //System.out.println("Token: " + token.getLexeme() + " POSTag: " + token.getPOSTag() + " Features: " + token.getFeatures()); // classe morfológica de acordo com o contexto
+                }
+        }
+    }
+
 
 }
