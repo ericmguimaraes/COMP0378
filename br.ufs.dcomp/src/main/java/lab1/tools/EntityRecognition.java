@@ -177,7 +177,7 @@ public class EntityRecognition {
         System.out.println("Lemas reconhecidos com CoGrOO");
         System.out.println("******************************************************************");
 
-        lemmas.forEach(lemma -> {System.out.println(lemma.toString());});
+        lemmas.forEach(System.out::println);
 
         System.out.println("END Lemmas Reconhecidos");
         System.out.println("Padrões encontrados: "+lemmas.size());
@@ -190,7 +190,7 @@ public class EntityRecognition {
         System.out.println("Numeros e Nomes Próprios Reconhecidos com RegEx");
         System.out.println("******************************************************************");
 
-        foundedRegex.forEach(text -> {System.out.println(text.toString());});
+        foundedRegex.forEach(System.out::println);
 
         System.out.println("END Numeros e Nomes Próprios Reconhecidos");
         System.out.println("Padrões encontrados: "+entitiesFounded);
@@ -206,7 +206,7 @@ public class EntityRecognition {
         System.out.println("Stemmers reconhecidos com PTStemmer");
         System.out.println("******************************************************************");
 
-        stems.forEach(stem -> {System.out.println(stem);});
+        stems.forEach(System.out::println);
 
         System.out.println("END Stemmers Reconhecidos");
         System.out.println("Padrões encontrados: "+stems.size());
