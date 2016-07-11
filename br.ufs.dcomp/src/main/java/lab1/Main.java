@@ -28,8 +28,7 @@ public class Main {
 
         //Parte 2 - Tokenizer
 
-        List<Token> tokens = tokenizer.textToTokens(textWithRegex);
-        tokenizer.printTokens(tokens);
+        tokenizer.textToTokens(textWithRegex);
 
         //Parte 3 - apply lemmatizer and stemmer
 
@@ -37,8 +36,7 @@ public class Main {
 
         String textWithStemmer = entityRecognition.stemme(textWithLemmatizer);
 
-        tokens = tokenizer.textToTokens(textWithStemmer);
-        tokenizer.printTokens(tokens);
+        tokenizer.textToTokens(textWithStemmer);
 
         //Parte 4 - Ruido e Menor Distancia
 

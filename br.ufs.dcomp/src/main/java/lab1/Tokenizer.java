@@ -16,6 +16,7 @@ public class Tokenizer {
         Comparator<Token> byCounter = (t1, t2) -> Long.compare(t1.getCounter(), t2.getCounter());
         tokens.sort(byCounter);
         Collections.reverse(tokens);
+        printTokens(tokens);
         return tokens;
     }
 
