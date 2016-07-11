@@ -1,4 +1,6 @@
-package lab1;
+package lab1.tools;
+
+import lab1.model.Token;
 
 import java.util.*;
 

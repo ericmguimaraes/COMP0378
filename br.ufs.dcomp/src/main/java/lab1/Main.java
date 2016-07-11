@@ -2,7 +2,9 @@ package lab1;
 
 import lab1.tools.EntityRecognition;
 import lab1.tools.MinimumEditDistance;
+import lab1.tools.Tokenizer;
 import lab1.util.FileManager;
+import lab1.util.Noise;
 import ptstemmer.exceptions.PTStemmerException;
 
 import java.io.IOException;

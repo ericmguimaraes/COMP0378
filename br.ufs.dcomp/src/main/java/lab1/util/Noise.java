@@ -1,4 +1,4 @@
-package lab1;
+package lab1.util;
 
 import java.util.Random;
 import java.io.IOException;

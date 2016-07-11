@@ -1,4 +1,4 @@
-package lab1;
+package lab1.model;
 
 /**
  * Created by ericm on 08-Jul-16.
