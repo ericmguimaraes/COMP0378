@@ -16,7 +16,7 @@ public class Noise {
 
         Random r = new Random();
 
-        int i = text.length() / 15;
+        int i = text.length() / 5;
         StringBuilder strBuilder = new StringBuilder(text);
         while (i>0){
             strBuilder.insert(r.nextInt(text.length()-1), alfabeto.charAt(r.nextInt(tam)));

@@ -1,6 +1,7 @@
 package lab1;
 
 import lab1.tools.EntityRecognition;
+import lab1.tools.MinimumEditDistance;
 import lab1.util.FileManager;
 import ptstemmer.exceptions.PTStemmerException;
 
@@ -42,7 +43,11 @@ public class Main {
 
         Noise noise = new Noise();
 
-        noise.applyNoise(textWithRegex);
+        String textWithNoise = noise.applyNoise(textWithRegex);
+
+        MinimumEditDistance minimumEditDistance = new MinimumEditDistance();
+
+        minimumEditDistance.minDistance(textWithNoise,textWithRegex);
 
 
     }
