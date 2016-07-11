@@ -1,2 +1,4 @@
 # COMP0378
 COMP0378 - TOPICOS ESPECIAIS EM COMPUTACAO INTELIGENTE II
+
+Projeto com gradle criado no Intellij
