@@ -15,32 +15,38 @@ public class Main {
     public static void main(String[] args) throws IOException, PTStemmerException {
         if(args.length==0)
             throw new IllegalArgumentException("Informe o nome do arquivo a ser analizado.");
-        nlpnolemmatizerneitherstremer(args);
-        nlpwithlemmatizerandstremer(args);
-    }
-
-    public static void nlpnolemmatizerneitherstremer(String[] args) throws IOException {
         FileManager fileManager = new FileManager();
         Tokenizer tokenizer = new Tokenizer();
         EntityRecognition entityRecognition = new EntityRecognition();
         List<String> lines = fileManager.readFile(args[0]);
-        lines = entityRecognition.regexFinderNoLemmatizerNeitherStremer(lines);
-        List<Token> tokens = tokenizer.linesToToken(lines);
-        tokens.forEach(token -> {
-            System.out.println(token.toString());
-        });
-    }
 
-    public static void nlpwithlemmatizerandstremer(String[] args) throws IOException, PTStemmerException {
-        FileManager fileManager = new FileManager();
-        Tokenizer tokenizer = new Tokenizer();
-        EntityRecognition entityRecognition = new EntityRecognition();
-        List<String> lines = fileManager.readFile(args[0]);
-        lines = entityRecognition.regexFinder(lines);
-        List<Token> tokens = tokenizer.linesToToken(lines);
-        tokens.forEach(token -> {
-            System.out.println(token.toString());
-        });
+        String textOriginal = entityRecognition.appendList(lines);
+
+        //Parte 1 - Regex
+
+        String textWithRegex = entityRecognition.regexFinder(textOriginal);
+
+        //Parte 2 - Tokenizer
+
+        List<Token> tokens = tokenizer.textToTokens(textWithRegex);
+        tokenizer.printTokens(tokens);
+
+        //Parte 3 - apply lemmatizer and stemmer
+
+        String textWithLemmatizer = entityRecognition.lemmatize(textWithRegex);
+
+        String textWithStemmer = entityRecognition.stemme(textWithLemmatizer);
+
+        tokens = tokenizer.textToTokens(textWithStemmer);
+        tokenizer.printTokens(tokens);
+
+        //Parte 4 - Ruido e Menor Distancia
+
+        Noise noise = new Noise();
+
+        noise.applyNoise(textWithRegex);
+
+
     }
 
 }
