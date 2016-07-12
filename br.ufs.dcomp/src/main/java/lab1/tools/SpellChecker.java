@@ -38,7 +38,7 @@ public class SpellChecker {
             hashMap.put(Long.valueOf(AStar(target, s2)), s2); // Fazer esse cast é mais bonito do que ficar criando objeto Integer para o hashMap?
         }
 
-        // Ordena hashMap;
+        // Ordena hashMap, não implementado
         //bestString = hashMap.get(menor);
         return bestString;
     }
@@ -90,10 +90,11 @@ public class SpellChecker {
          * Método não implementado. Precisa corrigir o código do A*
          */
 
+        int distance = 0;
         /*
         openNodes.add(grid[0][0]);
         Node current;
-        int D[][] = new int[s1.length()][s2.length()], distance = 0;
+        int D[][] = new int[s1.length()][s2.length()];
         D[0][0] = 0;
 
         for (int i = 0; i < s1.length(); i++) {
@@ -117,10 +118,10 @@ public class SpellChecker {
             distance += temp.finalCost;
             temp = temp.parent;
         }
-
+        */
         System.out.println(distance);
         return distance;
-        */
+
     }
 
 }
