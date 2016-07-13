@@ -4,7 +4,7 @@ COMP0378 - TOPICOS ESPECIAIS EM COMPUTACAO INTELIGENTE II
 Projeto com gradle criado no Intellij
 
 
-Ferramentas para NLP em java:
+Referências de ferramentas para NLP em java:
 
   - Apache OpenNLP: https://opennlp.apache.org/
   - PTStemmer: https://github.com/SocialSLA/PTStemmer-Java
