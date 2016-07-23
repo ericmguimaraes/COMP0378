@@ -33,4 +33,11 @@ public class FileManager {
         return true;
     }
 
+    public boolean writeToFile(String filename, String text) throws IOException {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filename))) {
+            writer.write(text);
+        }
+        return true;
+    }
+
 }

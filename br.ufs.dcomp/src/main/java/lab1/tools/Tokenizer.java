@@ -12,8 +12,8 @@ public class Tokenizer {
     public List<Token> textToTokens(String text){
         if(text==null || text.isEmpty())
             throw new RuntimeException("No lines to analyze");
-        HashMap<String,Long> hashMap = getHashMap(text);
         List<Token> tokens = new ArrayList<Token>();
+        HashMap<String,Long> hashMap = getHashMap(text);
         hashMap.forEach((k,v) -> {if(!k.equals(""))tokens.add(new Token(k,v));});
         Comparator<Token> byCounter = (t1, t2) -> Long.compare(t1.getCounter(), t2.getCounter());
         tokens.sort(byCounter);
@@ -22,8 +22,13 @@ public class Tokenizer {
         return tokens;
     }
 
-    private HashMap<String,Long> getHashMap(String text) {
+    public HashMap<String,Long> getHashMap(String text) {
         HashMap<String,Long> hashMap = new HashMap<String, Long>();
+        getHashMap(text,hashMap);
+        return hashMap;
+    }
+
+    public void getHashMap(String text, HashMap<String,Long> hashMap) {
         text = text.replace("(","")
                 .replace(")","")
                 .replace("!","")
@@ -34,18 +39,16 @@ public class Tokenizer {
                 .replace(";","")
                 .replace("\"","");
 
-            String[] words = text.split("\\s+");
-            for(String word: words){
-                if(hashMap.containsKey(word)){
-                    long counter = hashMap.get(word);
-                    counter++;
-                    hashMap.put(word,counter);
-                } else {
-                    hashMap.put(word, (long) 1);
-                }
+        String[] words = text.split("\\s+");
+        for(String word: words){
+            if(hashMap.containsKey(word)){
+                long counter = hashMap.get(word);
+                counter++;
+                hashMap.put(word,counter);
+            } else {
+                hashMap.put(word, (long) 1);
             }
-
-        return hashMap;
+        }
     }
 
     public void printTokens(List<Token> tokens){
@@ -56,4 +59,6 @@ public class Tokenizer {
         });
         System.out.println("*****************************************");
     }
+
+
 }
