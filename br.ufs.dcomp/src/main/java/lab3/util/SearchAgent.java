@@ -18,13 +18,14 @@ import java.util.Random;
 public class SearchAgent {
 
     // movie lists for get reviews
-    static final String[] fMovies = {"indie-game-the-movie-t40317", "a-viagem-de-chihiro-t1246",
-            "cidadaoquatro-t109116", "waking-life-t1414", "dogville-t4855", "sr-ninguem-t12536", "masculino-feminino-t12255"};
+    static final String[] fMovies = {"indie-game-the-movie-t40317", "a-viagem-de-chihiro-t1246", "sr-ninguem-t12536",
+            "cidadaoquatro-t109116", "waking-life-t1414", "dogville-t4855", "masculino-feminino-t12255"};
     static final String[] acMovies = {"226260", "980", "125828", "210222", "39187", "123734", "27442"};
 
-    static final String charset = "UTF-8";
-    // If you omit the user agent, then you get a 403 back. If you simulate a web browser, then you get a way much larger HTML response back.
+    // For google bot: If you omit the user agent, then you get a 403 back.
+    // If you simulate a web browser, then you get a way much larger HTML response back.
     static final String userAgent = "Googlebot/2.1 (+http://www.google.com/bot.html)";
+    static final String charset = "UTF-8";
 
     public static long getGoogleHits (String search) throws IOException {
 
