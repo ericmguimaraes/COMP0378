@@ -9,15 +9,11 @@ import java.io.IOException;
  */
 
 public class Main {
-    public static void main(String[] args) {
-        SearchAgent gAgent = new SearchAgent("vem monstro", "google");
-        SearchAgent fAgent = new SearchAgent("procurando-dory-t61563/", "filmow");
-        SearchAgent acAgent = new SearchAgent("226078", "adorocinema");
-        try {
-            System.out.println("Google Search Agent: " + gAgent.getGoogleHits() + " results" +
-                    "\nFilmow Search Agent: " + fAgent.getFilmowReview() + "\nAdoro Cinema Search Agent: " + acAgent.getAdoroCinemaReview());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws IOException {
+        System.out.println("Google Search Agent: " + SearchAgent.getGoogleHits("vem monstro") + " results"
+                + "\nFilmow Search Agent: " + SearchAgent.getReview("filmow", "procurando-dory-t61563")
+                + "\nAdoro Cinema Search Agent: " + SearchAgent.getReview("adorocinema", "226078"));
+
+        SearchAgent.generateCorpora();
     }
 }
