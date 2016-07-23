@@ -46,15 +46,6 @@ public class MinimumEditDistance {
     }
 
     public void minDistance(String textWithErrors, String corpus) {
-        textWithErrors = textWithErrors.replace("(","")
-                .replace(")","")
-                .replace("!","")
-                .replace(".","")
-                .replace(",","")
-                .replace("?","")
-                .replace(":","")
-                .replace(";","")
-                .replace("\"","");
 
         corpus = corpus.replace("(","")
                 .replace(")","")

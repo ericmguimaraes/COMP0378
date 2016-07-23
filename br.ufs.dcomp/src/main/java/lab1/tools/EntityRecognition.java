@@ -89,7 +89,6 @@ public class EntityRecognition {
 
         Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
         st.enableCaching(1000);
-        st.ignore("a","e");
         String[] localStems = st.getPhraseStems(text);
         Collections.addAll(stems,localStems);
         StringBuilder stringBuilder = new StringBuilder();
