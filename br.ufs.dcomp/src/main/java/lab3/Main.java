@@ -14,8 +14,8 @@ public class Main {
         SearchAgent fAgent = new SearchAgent("procurando-dory-t61563/", "filmow");
         SearchAgent acAgent = new SearchAgent("226078", "adorocinema");
         try {
-            System.out.println("gAgent: " + gAgent.getGoogleHits() + " results" +
-                    "\nfAgent: " + fAgent.getFilmowReview() + "\nacAgent: " + acAgent.getAdoroCinemaReview());
+            System.out.println("Google Search Agent: " + gAgent.getGoogleHits() + " results" +
+                    "\nFilmow Search Agent: " + fAgent.getFilmowReview() + "\nAdoro Cinema Search Agent: " + acAgent.getAdoroCinemaReview());
         } catch (IOException e) {
             e.printStackTrace();
         }

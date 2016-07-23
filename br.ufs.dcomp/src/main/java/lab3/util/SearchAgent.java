@@ -15,7 +15,8 @@ public class SearchAgent {
 
     String search, target;
     String charset = "UTF-8";
-    final String userAgent = "ExampleBot 1.0 (+http://example.com/bot)"; // Change this to your company's name and bot homepage!
+    // to help with google searchs. If you omit the user agent, then you get a 403 back. If you simulate a web browser, then you get a way much larger HTML response back.
+    final String userAgent = "For academic use bot (+http://computacao.ufs.br/)";
 
     public SearchAgent(String search, String target) {
         this.search = search;
@@ -59,7 +60,7 @@ public class SearchAgent {
         Document doc = Jsoup.connect(target + search + "/criticas/espectadores/").get();
         Element ACreview = doc.select("#content-start > article > section:nth-child(3) > div.reviews-users-comment > div:nth-child(1) > div.col-xs-12.col-sm-9 > p").first();
 
-        String review = ACreview.toString().replace("", "");
+        String review = ACreview.toString();
 
         return review;
     }
