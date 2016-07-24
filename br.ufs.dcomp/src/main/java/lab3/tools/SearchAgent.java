@@ -119,9 +119,8 @@ public class SearchAgent {
                                               .replace(" itemprop=\"description\"","") + "\n");
         }
 
-        (new FileManager()).writeToFile("corpus/corpus_reviews.txt", reviews.toString());
+        (new FileManager()).writeToFile("corpus/corpus_filmow.txt", reviews.toString());
         System.out.println("Corpus gerado.\n");
     }
-
 
 }

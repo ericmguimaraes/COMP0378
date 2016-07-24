@@ -31,16 +31,19 @@ public class Document {
         termImportance = new HashMap<>();
     }
 
-    public void init(){
+    public void init(boolean BTF){
         Tokenizer tokenizer = new Tokenizer();
         termsMap = tokenizer.getHashMap(text);
         calculateTotal();
-        calculateTF();
+        if (BTF) {
+            calculateBTF();
+        } else {
+            calculateTF();
+        }
     }
 
-    private void calculateTF(){
-        termsMap.forEach((k, v) -> tfs.put(k, ((double) v / totalTermos)));
-    }
+    private void calculateTF(){ termsMap.forEach((k, v) -> tfs.put(k, ((double) v / totalTermos)));  }
+    private void calculateBTF(){ termsMap.forEach((k, v) -> tfs.put(k, ((double) 1))); }
 
     private void calculateTotal() {
         totalTermos = 0;

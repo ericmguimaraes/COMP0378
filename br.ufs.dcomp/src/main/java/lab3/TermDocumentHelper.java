@@ -15,6 +15,7 @@ public class TermDocumentHelper {
     private List<Document> documents;
 
     private HashMap<String,Double> idfs;
+    public boolean BTFMode = false; // Boolean TF for Boolean Naive Bayes
 
     public TermDocumentHelper(List<Document> documents) {
         this.documents = documents;
@@ -28,9 +29,7 @@ public class TermDocumentHelper {
         prepareToNaiveBayes();
     }
 
-    private void populateTermFrequency() {
-        documents.forEach(Document::init);
-    }
+    private void populateTermFrequency() { documents.forEach(Document->{Document.init(BTFMode);}); }
 
     public List<Document> getDocuments() {
         return documents;
@@ -47,6 +46,8 @@ public class TermDocumentHelper {
     public void setIdfs(HashMap<String, Double> idfs) {
         this.idfs = idfs;
     }
+
+    public void setBTFMode(boolean BTFMode) { this.BTFMode = BTFMode; }
 
     private void populateIDF(){
         documents.forEach(document -> {
@@ -105,7 +106,7 @@ public class TermDocumentHelper {
         fm.writeToFile(headers?"Importance_Matrix_headers.csv":"Importance_Matrix.csv",stringBuilder.toString());
     }
 
-    public void printTFMatrix(boolean headers) throws IOException {
+    public void printTFMatrix(boolean headers, String name) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         if(headers) {
             stringBuilder.append("classe;document;");
@@ -128,7 +129,10 @@ public class TermDocumentHelper {
             stringBuilder.append(System.getProperty("line.separator"));
         });
         FileManager fm = new FileManager();
-        fm.writeToFile(headers?"TF_Matrix_headers.csv":"TF_Matrix.csv",stringBuilder.toString());
+        if (name.contentEquals(""))
+            fm.writeToFile(headers?"TF_Matrix_headers.csv":"TF_Matrix.csv",stringBuilder.toString());
+        else
+            fm.writeToFile(headers?name+"_headers.csv":name+".csv",stringBuilder.toString());
     }
 
     public void prepareToNaiveBayes(){

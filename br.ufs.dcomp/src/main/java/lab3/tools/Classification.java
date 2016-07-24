@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class Classification {
 
     // returns Semantic Orientation from a review
-    public double SemanticOrientation (String review) {
+    public void SemanticOrientation (String review) {
         /**
          * Algorithm based in the PMI-IR Algorithm as specified by Turney(2002) in http://www.aclweb.org/anthology/P02-1053.pdf
          */
@@ -31,7 +31,6 @@ public class Classification {
 
         List<String> phrases = new ArrayList<String>();
         List<Token> tokens = new ArrayList<Token>();
-        double SO = 0;
 
         document.setText(review);
         cogroo.analyze(document);
@@ -59,6 +58,7 @@ public class Classification {
             }
         });
 
+        double SO = 0;
         // Generate SO for each phrase.
         for (String phrase : phrases) {
             try {
@@ -72,7 +72,11 @@ public class Classification {
             System.out.println("Phrase: "+ phrase.toString() +" - Cumulative SO: " + SO);
         }
 
-        return SO;
+        if (SO > 0)
+            System.out.println("Positive: " + review.toString());
+        else if (SO < 0)
+            System.out.println("Negative: " + review.toString());
+
     }
 
 }
