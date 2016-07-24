@@ -3,6 +3,7 @@ package lab3.util;
 import net.sf.javaml.classification.Classifier;
 import net.sf.javaml.classification.KNearestNeighbors;
 import net.sf.javaml.classification.bayes.NaiveBayesClassifier;
+import net.sf.javaml.classification.evaluation.CrossValidation;
 import net.sf.javaml.classification.evaluation.EvaluateDataset;
 import net.sf.javaml.classification.evaluation.PerformanceMeasure;
 import net.sf.javaml.core.Dataset;
@@ -69,7 +70,9 @@ public class MachineLearningHandler {
         System.out.println("Wrong predictions " + wrong);
 
         if (metricas) {
-            Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(classificador, dataForClassification);
+            System.out.println("******Rodando K-fold******");
+            CrossValidation cv = new CrossValidation(classificador);
+            Map<Object, PerformanceMeasure> pm = cv.crossValidation(dataForClassification);
             for (Object o : pm.keySet()) {
                 System.out.println("------" + o + "------");
                 System.out.println("Accuracy : " + pm.get(o).getAccuracy());
