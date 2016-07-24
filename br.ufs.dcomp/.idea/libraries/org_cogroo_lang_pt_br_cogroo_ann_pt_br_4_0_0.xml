@@ -19,6 +19,7 @@
       <root url="jar://$PROJECT_DIR$/libs/commons-cli-1.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/libs/commons-lang-2.6.jar!/" />
       <root url="jar://$PROJECT_DIR$/libs/cogroo-res-pt_br-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/javaml-0.1.7.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

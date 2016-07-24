@@ -13,6 +13,13 @@ import java.util.List;
  */
 public class FileManager {
 
+    public String readFileToString(String filename) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        List<String> lines = readFile(filename);
+        lines.forEach(s -> stringBuilder.append(s).append(System.getProperty("line.separator")));
+        return stringBuilder.toString();
+    }
+
     public List<String> readFile(String filename) throws IOException {
         List<String> lines;
         try {

@@ -1,10 +1,8 @@
 package lab3.model;
 
-import lab1.model.Token;
 import lab1.tools.Tokenizer;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ericm on 23-Jul-16.
@@ -23,9 +21,12 @@ public class Document {
 
     private HashMap<String,Double> idfs;
 
-    public Document(String name, String text) {
+    private String classe;
+
+    public Document(String name, String text, String classe) {
         this.name = name;
         this.text = text;
+        this.classe = classe;
         tfs = new HashMap<>();
         idfs = new HashMap<>();
     }
@@ -93,4 +94,17 @@ public class Document {
     public void setIdfs(HashMap<String, Double> idfs) {
         this.idfs = idfs;
     }
+
+    public String getClasse() {
+        return classe;
+    }
+
+    public void setClasse(String classe) {
+        this.classe = classe;
+    }
+
+    public SortedSet<String> getSortedIDFKeys() {
+        return new TreeSet<String>(idfs.keySet());
+    }
+
 }

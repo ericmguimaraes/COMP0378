@@ -1,0 +1,38 @@
+<component name="libraryTable">
+  <library name="ajt-2.9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/ajt-2.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/cogroo-addon-pt_br-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/cogroo-ann-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/cogroo-gc-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/cogroo-nlp-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-cli-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-codec-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-lang-2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-math-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/guava-13.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/hppc-0.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/Jama-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/javaml-0.1.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jaxb-api-2.2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jsoup-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/juh-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jurt-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jwnl-1.3.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/libsvm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/log4j-1.2.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/morfologik-fsa-1.5.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/morfologik-polish-1.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/morfologik-stemming-1.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/morfologik-tools-1.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/opennlp-maxent-3.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/opennlp-tools-1.5.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/PTStemmer_v2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/ridl-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/unoil-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/weka.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

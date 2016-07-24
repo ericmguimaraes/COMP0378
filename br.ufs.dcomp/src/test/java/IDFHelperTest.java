@@ -1,5 +1,5 @@
 import lab3.model.Document;
-import lab3.util.IDFHelper;
+import lab3.IDFHelper;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,8 +14,9 @@ public class IDFHelperTest {
 
     @Test
     public void tfTest() throws IOException {
+        String classe = "";
         List<Document> documents = new ArrayList<>();
-        documents.add(new Document("doc teste1","system human system engineering testing EPS"));
+        documents.add(new Document("doc teste1","system human system engineering testing EPS", classe));
         IDFHelper idfHelper = new IDFHelper(documents);
         idfHelper.init();
         idfHelper.getDocuments().get(0).getTfs().forEach((s, aDouble) -> {
@@ -28,22 +29,19 @@ public class IDFHelperTest {
 
     @Test
     public void IDFfTest() throws IOException {
+        String classe = "classe";
         List<Document> documents = new ArrayList<>();
-        documents.add(new Document("doc teste1","humman machine interface for computer applications"));
-        documents.add(new Document("doc teste2","a survey user opinion of computer system response time"));
-        documents.add(new Document("doc teste3","the EPS user interface management system"));
-        documents.add(new Document("doc teste4","system human system engineering testing EPS"));
-        documents.add(new Document("doc teste5","the generation of random binary and ordered trees"));
-        documents.add(new Document("doc teste6","the intersection graph of paths in trees"));
-        documents.add(new Document("doc teste7","graph minors a survey"));
+        documents.add(new Document("doc teste1","humman machine interface for computer applications", classe));
+        documents.add(new Document("doc teste2","a survey user opinion of computer system response time", classe));
+        documents.add(new Document("doc teste3","the EPS user interface management system", classe));
+        documents.add(new Document("doc teste4","system human system engineering testing EPS", classe));
+        documents.add(new Document("doc teste5","the generation of random binary and ordered trees", classe));
+        documents.add(new Document("doc teste6","the intersection graph of paths in trees", classe));
+        documents.add(new Document("doc teste7","graph minors a survey", classe));
         IDFHelper idfHelper = new IDFHelper(documents);
         idfHelper.init();
-        idfHelper.getDocuments().get(3).getIdfs().forEach((s, aDouble) -> {
-            if(s.equals("system")){
-                Double expected = 0.298d;
-             //   Assert.assertTrue(aDouble.equals(expected));
-            }
-        });
+        idfHelper.printIDFMatrix(true);
+        idfHelper.printIDFMatrix(false);
     }
 
 
