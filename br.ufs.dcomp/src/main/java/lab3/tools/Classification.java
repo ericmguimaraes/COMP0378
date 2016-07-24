@@ -1,5 +1,6 @@
 package lab3.tools;
 
+import lab1.tools.Tokenizer;
 import lab3.util.PostTokenizer;
 
 import org.cogroo.analyzer.Analyzer;
@@ -11,6 +12,7 @@ import org.cogroo.text.impl.DocumentImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.List;
 
@@ -30,7 +32,8 @@ public class Classification {
         ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
         Analyzer cogroo = factory.createPipe();
         Document document = new DocumentImpl();
-        List<Token> tokens = new ArrayList<Token>();
+        //List<Token> tokens = new ArrayList<Token>();
+        HashMap<Token, Long> tokens = new HashMap<>();
         List<String> phrases = new ArrayList<String>();
         double SO = 0;
 
@@ -38,35 +41,50 @@ public class Classification {
         document.setText(review);
         cogroo.analyze(document);
 
+        System.out.println("Review: " + document.getText());
+
         // get sentence from review
         for (Sentence sentence : document.getSentences()) {
-            System.out.println(sentence.getText());
             // get tokens from sentence
             for (Token token : sentence.getTokens()) {
+                token.setLexeme(token.getLexeme().replace("'", "").replace(".", "").replace("<br>", ""));
                 // removes names and non-text-characters
                 if (token.getPOSTag().contentEquals("prop") || !PostTokenizer.isValidToken(token)) {
                     continue;
                 }
-                tokens.add(token);
+                if(tokens.containsKey(token)){
+                    long counter = tokens.get(token);
+                    counter++;
+                    tokens.put(token,counter);
+                } else {
+                    tokens.put(token, (long) 1);
+                }
+                //tokens.add(token);
             }
         }
 
-        tokens.forEach((token) -> {
+        /*tokens.forEach((token) -> {
             if(token.getPOSTag().contentEquals("adj") || token.getLexeme().contentEquals("adv")) {
                 phrases.add(token.getLexeme());
             }
-        });
+            if (!phrases.isEmpty() && token.getPOSTag().contentEquals("n")) {
+                String p = phrases.remove(0) +" "+ token.getLexeme();
+                phrases.add(p);
+            }
+        });*/
 
+        // Generate SO for each phrase.
         for (String phrase : phrases) {
             try {
-                SO += log((SearchAgent.getGoogleHits(phrase.toString() + " AND ótimo")) * SearchAgent.getGoogleHits("ruim") /
-                         (SearchAgent.getGoogleHits(phrase.toString() + " AND ruim")) * SearchAgent.getGoogleHits("ótimo"));
+                SO += log((SearchAgent.getGoogleHits("(\"muito bom\" OR \"vale a pena\" OR \"recomendo\") ~"
+                        +phrase.toString()+" -site:filmow.com -site:adorocinema.com.br"))/
+                        (SearchAgent.getGoogleHits("(\"ruim\" OR \"chato\" OR \"cansativo\" OR \"não recomendo\") ~"
+                        +phrase.toString()+ " -site:filmow.com -site:adorocinema.com.br"))+0.01);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println("Phrase: "+ phrase.toString() +" - Cumulative SO: " + SO);
         }
-
-        System.out.println("SO: " + SO + "\n");
         return SO;
 
     }

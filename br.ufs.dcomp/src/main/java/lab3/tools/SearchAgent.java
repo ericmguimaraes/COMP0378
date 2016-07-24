@@ -36,6 +36,7 @@ public class SearchAgent {
         resultStats = resultStats.replace("Aproximadamente ","")
                                  .replace(" ","")
                                  .replace("resultados", "")
+                                 .replace("resultado", "")
                                  .replace(".", "");
 
         Long hits = Long.parseUnsignedLong(resultStats);
@@ -51,28 +52,31 @@ public class SearchAgent {
 
         switch (target) {
             case ("filmow"):
+                System.out.println("******Capturando review aleatória do Filmow******");
+
                 target = "http://www.filmow.com/";
                 if (movie == "") movie = fMovies[(new Random()).nextInt(fMovies.length)];
                 doc = Jsoup.connect(target + movie).get();
                 Element FilmowReview = doc.select("#all-comments p").get((new Random()).nextInt(10));
 
-                review = FilmowReview.toString()
-                        .replace("<p>", "<p> ")
-                        .replace("<p>", " </p>");
+                review = FilmowReview.toString().replace("<p>", "")
+                                                .replace("</p>", "") + "\n";
                 break;
             case ("adorocinema"):
+                System.out.println("******Capturando review aleatória do Adoro Cinema******");
                 target = "http://www.adorocinema.com/filmes/filme-";
                 if (movie == "") movie = acMovies[(new Random()).nextInt(acMovies.length)];
                 doc = Jsoup.connect(target + movie + "/criticas/espectadores/").get();
                 ACreview = doc.select("#content-start > article > section:nth-child(3) > div.reviews-users-comment " +
                         "> div:nth-child("+(new Random()).nextInt(5)+") > div.col-xs-12.col-sm-9 > p").first();
 
-                review = ACreview.toString()
-                        .replace("<span class=\"blue-link user_url\" data-ac=\"ACrACr\" target=\"_blank\"> </span>" , "")
-                        .replace(" itemprop=\"description\"","");
+                review = ACreview.toString().replace("<p>","")
+                                            .replace("</p>","")
+                                            .replace("<span class=\"blue-link user_url\" data-ac=\"ACrACr\" target=\"_blank\"> </span>" , "")
+                                            .replace(" itemprop=\"description\"","") + "\n";
                 break;
             default:
-                System.out.println("What if the target?");
+                System.out.println("Where is the target?");
                 break;
         }
 
@@ -80,12 +84,15 @@ public class SearchAgent {
     }
 
     public static void generateCorpus () throws IOException {
-        List<String> reviews = new ArrayList<String>();
+        StringBuilder reviews = new StringBuilder();
         Document fDoc, acDoc;
         String fURL = "http://www.filmow.com/", acURL = "http://www.adorocinema.com/filmes/filme-";
         int length = fMovies.length;
         Element Freview, ACreview;
         Random random = new Random();
+        System.out.println("******Gerando Corpus: Reviews******");
+
+        System.out.println("1. Capturando reviews do Filmow");
 
         for (int i = 0; i < 20; i++) {
             fDoc = Jsoup.connect(fURL + fMovies[random.nextInt(length)]).get();
@@ -93,10 +100,12 @@ public class SearchAgent {
 
             if (Freview == null)
                 continue;
-            reviews.add(Freview.toString()
-                    .replace("<p>", "<p> ")
-                    .replace("<p>", " </p>"));
+            reviews.append(Freview.toString().replace("<p>", "")
+                                             .replace("</p>", "")
+                                             .replace("<br>", "") + "\n");
         }
+
+        System.out.println("2. Capturando reviews do Adoro Cinema");
 
         for (int i = 1; i < 20; i++) {
             acDoc = Jsoup.connect(acURL + acMovies[random.nextInt(length)] + "/criticas/espectadores/").get();
@@ -105,13 +114,13 @@ public class SearchAgent {
 
             if (ACreview == null)
                 continue;
-            reviews.add(ACreview.toString()
-                    .replace("<span class=\"blue-link user_url\" data-ac=\"ACrACr\" target=\"_blank\"> </span>" , "")
-                    .replace(" itemprop=\"description\"",""));
+            reviews.append(ACreview.toString().replace("<p>","") .replace("</p>","")
+                                              .replace("<span class=\"blue-link user_url\" data-ac=\"ACrACr\" target=\"_blank\"> </span>" , "")
+                                              .replace(" itemprop=\"description\"","") + "\n");
         }
 
-        FileManager outFile = new FileManager();
-        outFile.writeToFile("corpus.txt", reviews);
+        (new FileManager()).writeToFile("corpus/corpus_reviews.txt", reviews.toString());
+        System.out.println("Corpus gerado.\n");
     }
 
 

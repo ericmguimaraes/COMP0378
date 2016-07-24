@@ -16,7 +16,8 @@ public class PostTokenizer {
             token.getPOSTag().contentEquals("“") || token.getPOSTag().contentEquals("”") ||
             token.getPOSTag().contentEquals(",") || token.getPOSTag().contentEquals(";") ||
             token.getLexeme().contentEquals("<p>") || token.getLexeme().contentEquals("</p>")||
-            token.getLexeme().contentEquals("\uFEFF") || token.getLexeme().contentEquals("<br>")) {
+            token.getLexeme().contentEquals("\uFEFF") || token.getLexeme().contentEquals("<br>") ||
+            token.getLexeme().contentEquals("'")) {
             return false;
         } else {
             return true;
