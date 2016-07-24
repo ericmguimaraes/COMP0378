@@ -27,7 +27,7 @@ public class MachineLearningHandler {
         knn.buildClassifier(data);
         System.out.println("OK");
 
-        classify(data, classPosition, knn, metricas);
+        classify(data, knn, metricas);
     }
 
     private void naiveBayes(String file, int classPosition,
@@ -50,10 +50,10 @@ public class MachineLearningHandler {
         nbc.buildClassifier(data);
         System.out.println("OK");
 
-        classify(data, classPosition, nbc, metricas);
+        classify(data, nbc, metricas);
     }
 
-    private void classify(Dataset dataForClassification, int classPosition, Classifier classificador, boolean metricas) throws IOException {
+    private void classify(Dataset dataForClassification, Classifier classificador, boolean metricas) throws IOException {
         System.out.println("------Classificando------");
 
         int correct = 0, wrong = 0;
