@@ -22,7 +22,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/opennlp-tools-1.5.3.jar!/" />
+=======
+          <root url="jar://$MODULE_DIR$/../../libs/cogroo-addon-pt_br-4.0.0.jar!/" />
+>>>>>>> origin/master
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -31,7 +35,20 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/morfologik-polish-1.5.2.jar!/" />
+=======
+          <root url="jar://$MODULE_DIR$/../../libs/cogroo-gc-pt_br-4.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/ridl-3.0.1.jar!/" />
+>>>>>>> origin/master
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -67,7 +84,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/cogroo-ann-pt_br-4.0.0.jar!/" />
+=======
+          <root url="jar://$MODULE_DIR$/../../libs/morfologik-fsa-1.5.3.jar!/" />
+>>>>>>> origin/master
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -76,7 +97,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/cogroo-gc-pt_br-4.0.0.jar!/" />
+=======
+          <root url="jar://$MODULE_DIR$/../../libs/commons-lang-2.6.jar!/" />
+>>>>>>> origin/master
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -121,7 +146,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/commons-codec-1.4.jar!/" />
+=======
+          <root url="jar://$MODULE_DIR$/../../libs/hppc-0.4.1.jar!/" />
+>>>>>>> origin/master
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -130,7 +159,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/guava-13.0.1.jar!/" />
+=======
+          <root url="jar://$MODULE_DIR$/../../libs/cogroo-gc-4.0.0.jar!/" />
+>>>>>>> origin/master
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -148,7 +181,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/hppc-0.4.1.jar!/" />
+=======
+          <root url="jar://$MODULE_DIR$/../../libs/morfologik-polish-1.5.2.jar!/" />
+>>>>>>> origin/master
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -202,7 +239,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/morfologik-fsa-1.5.3.jar!/" />
+=======
+          <root url="jar://$MODULE_DIR$/../../libs/cogroo-nlp-4.0.0.jar!/" />
+>>>>>>> origin/master
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -229,7 +270,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/morfologik-tools-1.5.2.jar!/" />
+=======
+          <root url="jar://$MODULE_DIR$/../../libs/opennlp-tools-1.5.3.jar!/" />
+>>>>>>> origin/master
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -238,6 +283,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+<<<<<<< HEAD
           <root url="jar://$MODULE_DIR$/../../libs/ridl-3.0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -247,6 +293,8 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+=======
+>>>>>>> origin/master
           <root url="jar://$MODULE_DIR$/../../libs/jsoup-1.9.2.jar!/" />
         </CLASSES>
         <JAVADOC />
