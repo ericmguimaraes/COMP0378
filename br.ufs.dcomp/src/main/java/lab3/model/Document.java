@@ -19,7 +19,7 @@ public class Document {
 
     private HashMap<String,Double> tfs;
 
-    private HashMap<String,Double> idfs;
+    private HashMap<String,Double> termImportance;
 
     private String classe;
 
@@ -28,7 +28,7 @@ public class Document {
         this.text = text;
         this.classe = classe;
         tfs = new HashMap<>();
-        idfs = new HashMap<>();
+        termImportance = new HashMap<>();
     }
 
     public void init(){
@@ -87,12 +87,12 @@ public class Document {
         this.tfs = tfs;
     }
 
-    public HashMap<String, Double> getIdfs() {
-        return idfs;
+    public HashMap<String, Double> getTermImportance() {
+        return termImportance;
     }
 
-    public void setIdfs(HashMap<String, Double> idfs) {
-        this.idfs = idfs;
+    public void setTermImportance(HashMap<String, Double> termImportance) {
+        this.termImportance = termImportance;
     }
 
     public String getClasse() {
@@ -104,7 +104,11 @@ public class Document {
     }
 
     public SortedSet<String> getSortedIDFKeys() {
-        return new TreeSet<String>(idfs.keySet());
+        return new TreeSet<String>(termImportance.keySet());
+    }
+
+    public SortedSet<String> getSortedTFKeys() {
+        return new TreeSet<String>(tfs.keySet());
     }
 
 }
