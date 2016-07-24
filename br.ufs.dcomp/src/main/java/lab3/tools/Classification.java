@@ -1,6 +1,5 @@
 package lab3.tools;
 
-import lab1.tools.Tokenizer;
 import lab3.util.PostTokenizer;
 
 import org.cogroo.analyzer.Analyzer;
@@ -10,13 +9,10 @@ import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
 import org.cogroo.text.impl.DocumentImpl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.List;
-
 import static java.lang.StrictMath.log;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Ariel on 23-Jul-16.
@@ -32,11 +28,10 @@ public class Classification {
         ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
         Analyzer cogroo = factory.createPipe();
         Document document = new DocumentImpl();
-        //List<Token> tokens = new ArrayList<Token>();
-        HashMap<Token, Long> tokens = new HashMap<>();
-        List<String> phrases = new ArrayList<String>();
-        double SO = 0;
 
+        List<String> phrases = new ArrayList<String>();
+        List<Token> tokens = new ArrayList<Token>();
+        double SO = 0;
 
         document.setText(review);
         cogroo.analyze(document);
@@ -48,30 +43,21 @@ public class Classification {
             // get tokens from sentence
             for (Token token : sentence.getTokens()) {
                 token.setLexeme(token.getLexeme().replace("'", "").replace(".", "").replace("<br>", ""));
-                // removes names and non-text-characters
-                if (token.getPOSTag().contentEquals("prop") || !PostTokenizer.isValidToken(token)) {
-                    continue;
-                }
-                if(tokens.containsKey(token)){
-                    long counter = tokens.get(token);
-                    counter++;
-                    tokens.put(token,counter);
-                } else {
-                    tokens.put(token, (long) 1);
-                }
-                //tokens.add(token);
+                tokens.add(token);
             }
         }
 
-        /*tokens.forEach((token) -> {
+        tokens = PostTokenizer.refineTokens(tokens);
+
+        tokens.forEach((token) -> {
             if(token.getPOSTag().contentEquals("adj") || token.getLexeme().contentEquals("adv")) {
                 phrases.add(token.getLexeme());
             }
-            if (!phrases.isEmpty() && token.getPOSTag().contentEquals("n")) {
+            if (!phrases.isEmpty() && token.getPOSTag().contentEquals("n") && !phrases.get(0).contains(" ")) {
                 String p = phrases.remove(0) +" "+ token.getLexeme();
                 phrases.add(p);
             }
-        });*/
+        });
 
         // Generate SO for each phrase.
         for (String phrase : phrases) {
@@ -85,8 +71,8 @@ public class Classification {
             }
             System.out.println("Phrase: "+ phrase.toString() +" - Cumulative SO: " + SO);
         }
-        return SO;
 
+        return SO;
     }
 
 }

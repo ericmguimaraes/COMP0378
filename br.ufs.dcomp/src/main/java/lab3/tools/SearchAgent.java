@@ -114,7 +114,7 @@ public class SearchAgent {
 
             if (ACreview == null)
                 continue;
-            reviews.append(ACreview.toString().replace("<p>","") .replace("</p>","")
+            reviews.append(ACreview.toString().replace("<p> ","") .replace("</p>","")
                                               .replace("<span class=\"blue-link user_url\" data-ac=\"ACrACr\" target=\"_blank\"> </span>" , "")
                                               .replace(" itemprop=\"description\"","") + "\n");
         }
