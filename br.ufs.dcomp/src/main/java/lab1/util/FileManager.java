@@ -24,7 +24,11 @@ public class FileManager {
         try {
             lines=Files.readAllLines(Paths.get(filename), Charset.forName("UTF-8")); //Charset.forName("Cp1252"));
         } catch (MalformedInputException e){
-            lines=Files.readAllLines(Paths.get(filename));
+            try {
+                lines=Files.readAllLines(Paths.get(filename), Charset.forName("Cp1252"));
+            } catch (MalformedInputException e1){
+                lines = Files.readAllLines(Paths.get(filename));
+            }
         }
         return lines;
     }

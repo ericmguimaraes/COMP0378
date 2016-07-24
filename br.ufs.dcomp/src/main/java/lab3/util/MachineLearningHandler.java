@@ -8,6 +8,7 @@ import net.sf.javaml.classification.evaluation.EvaluateDataset;
 import net.sf.javaml.classification.evaluation.PerformanceMeasure;
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.Instance;
+import net.sf.javaml.filter.discretize.EqualWidthBinning;
 import net.sf.javaml.tools.data.FileHandler;
 
 import java.io.File;
@@ -31,18 +32,17 @@ public class MachineLearningHandler {
         classify(data, knn, metricas);
     }
 
-    private void naiveBayes(String file, int classPosition,
-                            boolean metricas) throws IOException {
+    public void naiveBayes(String file, int classPosition,
+                           boolean metricas) throws IOException {
         System.out.println("------Naive Bayes------");
-        Dataset data = FileHandler.loadDataset(new File(file), classPosition,
-                "	");
+        Dataset data = FileHandler.loadDataset(new File(file), classPosition,";");
 
 		/* Discretize through EqualWidtBinning */
-//		 EqualWidthBinning eb = new EqualWidthBinning(1000);
-//		 System.out.println("Start discretisation");
-//		 eb.build(data);
-//		 Dataset ddata = data.copy();
-//		 eb.filter(ddata);
+       /* EqualWidthBinning eb = new EqualWidthBinning(10);
+        System.out.println("Start discretisation");
+        eb.build(data);
+        Dataset ddata = data.copy();
+        eb.filter(ddata); */
 
         System.out.println("------Treinando------");
         boolean useLaplace = true;
@@ -80,6 +80,9 @@ public class MachineLearningHandler {
                 System.out.println("Accuracy : " + pm.get(o).getAccuracy());
                 System.out.println("Reccal : " + pm.get(o).getRecall());
                 System.out.println("Precision : " + pm.get(o).getPrecision());
+                System.out.println("True Positive Rate :"+pm.get(o).getTPRate());
+                System.out.println("True Negative Rate :"+pm.get(o).getTNRate());
+                System.out.println("F-Measure :"+pm.get(o).getFMeasure());
             }
         }
     }
