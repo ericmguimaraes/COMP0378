@@ -5,7 +5,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ public class FileManager {
     public List<String> readFile(String filename) throws IOException {
         List<String> lines;
         try {
-            lines=Files.readAllLines(Paths.get(filename), Charset.forName("Cp1252"));
+            lines=Files.readAllLines(Paths.get(filename), Charset.forName("UTF-8")); //Charset.forName("Cp1252"));
         } catch (MalformedInputException e){
             lines=Files.readAllLines(Paths.get(filename));
         }

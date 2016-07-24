@@ -1,4 +1,4 @@
-package lab3.util;
+package lab3.tools;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +23,8 @@ public class SearchAgent {
     static final String[] acMovies = {"226260", "980", "125828", "210222", "39187", "123734", "27442"};
 
     static final String charset = "UTF-8";
-    // If you omit the user agent, then you get a 403 back. If you simulate a web browser, then you get a way much larger HTML response back.
+    // For Google Search: If you omit the user agent, then you get a 403 back.
+    // If you simulate a web browser, then you get a way much larger HTML response back.
     static final String userAgent = "Googlebot/2.1 (+http://www.google.com/bot.html)";
 
     public static long getGoogleHits (String search) throws IOException {
@@ -55,14 +56,16 @@ public class SearchAgent {
                 doc = Jsoup.connect(target + movie).get();
                 Element FilmowReview = doc.select("#all-comments p").get((new Random()).nextInt(10));
 
-                review = FilmowReview.toString();
+                review = FilmowReview.toString()
+                        .replace("<p>", "<p> ")
+                        .replace("<p>", " </p>");
                 break;
             case ("adorocinema"):
                 target = "http://www.adorocinema.com/filmes/filme-";
-                if (movie == "") movie = acMovies[(new Random()).nextInt(fMovies.length)];
+                if (movie == "") movie = acMovies[(new Random()).nextInt(acMovies.length)];
                 doc = Jsoup.connect(target + movie + "/criticas/espectadores/").get();
                 ACreview = doc.select("#content-start > article > section:nth-child(3) > div.reviews-users-comment " +
-                        "> div:nth-child("+(new Random()).nextInt(10)+") > div.col-xs-12.col-sm-9 > p").first();
+                        "> div:nth-child("+(new Random()).nextInt(5)+") > div.col-xs-12.col-sm-9 > p").first();
 
                 review = ACreview.toString()
                         .replace("<span class=\"blue-link user_url\" data-ac=\"ACrACr\" target=\"_blank\"> </span>" , "")
@@ -76,7 +79,7 @@ public class SearchAgent {
         return review;
     }
 
-    public static void generateCorpora () throws IOException {
+    public static void generateCorpus () throws IOException {
         List<String> reviews = new ArrayList<String>();
         Document fDoc, acDoc;
         String fURL = "http://www.filmow.com/", acURL = "http://www.adorocinema.com/filmes/filme-";
@@ -90,7 +93,9 @@ public class SearchAgent {
 
             if (Freview == null)
                 continue;
-            reviews.add(Freview.toString());
+            reviews.add(Freview.toString()
+                    .replace("<p>", "<p> ")
+                    .replace("<p>", " </p>"));
         }
 
         for (int i = 1; i < 20; i++) {
@@ -106,7 +111,7 @@ public class SearchAgent {
         }
 
         FileManager outFile = new FileManager();
-        outFile.writeToFile("corpora.txt", reviews);
+        outFile.writeToFile("corpus.txt", reviews);
     }
 
 
