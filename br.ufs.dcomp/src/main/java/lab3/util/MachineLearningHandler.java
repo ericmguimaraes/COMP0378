@@ -63,16 +63,18 @@ public class MachineLearningHandler {
             Object realClassValue = inst.classValue();
             if (predictedClassValue.equals(realClassValue))
                 correct++;
-            else
+            else {
+                System.out.println("Erro ao classificar instancia: "+(correct+wrong));
                 wrong++;
+            }
         }
         System.out.println("Correct predictions  " + correct);
         System.out.println("Wrong predictions " + wrong);
 
         if (metricas) {
-            System.out.println("******Rodando K-fold******");
+            System.out.println("******Rodando 6-fold******");
             CrossValidation cv = new CrossValidation(classificador);
-            Map<Object, PerformanceMeasure> pm = cv.crossValidation(dataForClassification);
+            Map<Object, PerformanceMeasure> pm = cv.crossValidation(dataForClassification,6);
             for (Object o : pm.keySet()) {
                 System.out.println("------" + o + "------");
                 System.out.println("Accuracy : " + pm.get(o).getAccuracy());
