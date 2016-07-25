@@ -29,7 +29,9 @@ public class TermDocumentHelper {
         prepareToNaiveBayes();
     }
 
-    private void populateTermFrequency() { documents.forEach(Document->{Document.init(BTFMode);}); }
+    private void populateTermFrequency() {
+        documents.forEach(document-> document.init(BTFMode));
+    }
 
     public List<Document> getDocuments() {
         return documents;
@@ -71,10 +73,10 @@ public class TermDocumentHelper {
 
         //add idfs zero para termos nao existentes no doc
         idfs.forEach((s, aLong) ->
-            documents.forEach(document -> {
-                if(!document.getTermImportance().containsKey(s))
-                    document.getTermImportance().put(s,0d);
-            }));
+                documents.forEach(document -> {
+                    if(!document.getTermImportance().containsKey(s))
+                        document.getTermImportance().put(s,0d);
+                }));
     }
 
     public void printImportanceMatrix(boolean headers) throws IOException {

@@ -20,7 +20,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException, PTStemmerException {
-/*
+
         // Tarefa 01
         FileManager fm = new FileManager();
         List<Document> documents = new ArrayList<>();
@@ -50,7 +50,7 @@ public class Main {
         termDocumentHelper.printTFMatrix(true, "");
         termDocumentHelper.printTFMatrix(false, "");
         machineLearningHandler.naiveBayes("TF_Matrix.csv",0,true);
-*/
+
         System.out.println("\nTarefa 3: ");
 
         //Tarefa 03
@@ -61,11 +61,9 @@ public class Main {
         reviews.add(new Document("positiva2", fm2.readFileToString("corpus/corpus_adorocinema_positivas.txt"), "Reviews Positivas"));
         reviews.add(new Document("negativa1", fm2.readFileToString("corpus/corpus_filmow_negativas.txt"), "Reviews Negativas"));
         reviews.add(new Document("negativa2", fm2.readFileToString("corpus/corpus_adorocinema_negativas.txt"), "Reviews Negativas"));
-        TermDocumentHelper termDocumentHelper = new TermDocumentHelper(reviews);
+        termDocumentHelper = new TermDocumentHelper(reviews);
         termDocumentHelper.setBTFMode(true);
-        boolean bool = true;
         termDocumentHelper.init();
-        MachineLearningHandler machineLearningHandler = new MachineLearningHandler();
         System.out.println("******Preparando Matriz de TF TermoXDocumento******");
         termDocumentHelper.printTFMatrix(true, "TF_Matrix2");
         termDocumentHelper.printTFMatrix(false, "TF_Matrix2");

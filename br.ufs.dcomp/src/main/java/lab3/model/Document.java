@@ -43,6 +43,7 @@ public class Document {
     }
 
     private void calculateTF(){ termsMap.forEach((k, v) -> tfs.put(k, ((double) v / totalTermos)));  }
+
     private void calculateBTF(){ termsMap.forEach((k, v) -> tfs.put(k, ((double) 1))); }
 
     private void calculateTotal() {
