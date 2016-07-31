@@ -14,9 +14,10 @@ public class ClassificationTest {
     public void main() throws IOException {
         Classification classify = new Classification();
 
-        for (String review: (new FileManager()).readFile("corpus/corpus_adorocinema.txt")) {
+        for (String review: (new FileManager()).readFile("corpus/corpus_reviews.txt")) {
             classify.SemanticOrientation(review);
         }
+        classify.generateCorpora();
     }
 
 }

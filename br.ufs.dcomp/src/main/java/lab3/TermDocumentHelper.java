@@ -4,8 +4,11 @@ import lab1.util.FileManager;
 import lab3.model.Document;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by ericm on 23-Jul-16.
@@ -106,6 +109,16 @@ public class TermDocumentHelper {
         });
         FileManager fm = new FileManager();
         fm.writeToFile(headers?"Importance_Matrix_headers.csv":"Importance_Matrix.csv",stringBuilder.toString());
+    }
+
+    public String[] getTermsbyIDF () {
+        StringBuilder stringBuilder = new StringBuilder();
+        Map<String, Double> terms =
+                idfs.entrySet().stream()
+                        .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
+                        .limit(1000)
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return (String[]) terms.keySet().toArray();
     }
 
     public void printTFMatrix(boolean headers, String name) throws IOException {

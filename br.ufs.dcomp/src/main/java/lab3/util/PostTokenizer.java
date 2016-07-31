@@ -32,13 +32,34 @@ public class PostTokenizer {
         }
     }
 
-    static Pattern falses = Pattern.compile("(\\.|\\(|\"|'|\\)|,|<br>|</p>|<p>|“|\\?|;|”|\\uFEFF|\\d)");
+    static Pattern falses = Pattern.compile("(\\.|\\(|\"|'|\\)|,|<br>|</p>|<p>|“|\\?|;|”|\\uFEFF|\\d|\\*)");
 
     // remove irrelevant tokens
     static public boolean isValidToken(Token token) {
         if (token.getLexeme().matches(falses.toString()) || token.getLexeme().contentEquals("")) {
             return false;
         } else {
+            token.setLexeme(token.getLexeme().toLowerCase().replaceAll("\\("," ")
+                                                            .replaceAll("\\)"," ")
+                                                            .replaceAll("\\d+", " ")
+                                                            .replaceAll("!"," ")
+                                                            .replaceAll("\\."," ")
+                                                            .replaceAll(","," ")
+                                                            .replaceAll("\\?"," ")
+                                                            .replaceAll(":"," ")
+                                                            .replaceAll(";"," ")
+                                                            .replaceAll("\""," ")
+                                                            .replaceAll("=", " ")
+                                                            .replaceAll("\\+", " ")
+                                                            .replaceAll("\\s-", " ")
+                                                            .replaceAll("-\\s", " ")
+                                                            .replaceAll("\\S*[\\\\/]\\S*", " ")
+                                                            .replaceAll("\\s'"," ")
+                                                            .replaceAll("'\\s"," ")
+                                                            .replaceAll("\\s[^A-Za-záàâãéêíóôõúçÁÀÂÃÉÍÓÔÕÚÇ]+", " ")
+                                                            .replaceAll("[^A-Za-záàâãéêíóôõúçÁÀÂÃÉÍÓÔÕÚÇ]+\\s", " ")
+                                                            .replaceAll("\\s\\S{0,2}\\s", " ")
+                                                            .replaceAll("\\S{23,}", " "));
             return true;
         }
     }
