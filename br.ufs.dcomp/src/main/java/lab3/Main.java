@@ -35,12 +35,12 @@ public class Main {
         System.out.println("\nTarefa 1: ");
 
         // Tarefa 01
+        MachineLearningHandler machineLearningHandler = new MachineLearningHandler();
         TermDocumentHelper termDocumentHelper = new TermDocumentHelper(documents);
         System.out.println("******Preparando Matriz de Importancia TermoXDocumento******");
         termDocumentHelper.init();
         termDocumentHelper.printImportanceMatrix(false);
         termDocumentHelper.printImportanceMatrix(true);
-        MachineLearningHandler machineLearningHandler = new MachineLearningHandler();
         machineLearningHandler.knn("Importance_Matrix.csv",0,1,true);
 
         System.out.println("\nTarefa 2: ");

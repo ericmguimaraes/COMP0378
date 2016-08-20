@@ -11,9 +11,9 @@ public class SearchAgentTest {
 
     @Test
     public void main() throws IOException {
-        //SearchAgent.generateCorpus();
-        System.out.println(SearchAgent.getHits("bing", "(\"muito bom\" OR \"legal\" OR \"recomendo\")"));
-        System.out.println(SearchAgent.getHits("bing", "(\"ruim\" OR \"chato\" OR \"cansativo\" OR \"não recomendo\")"));
+        SearchAgent.generateCorpus();
+        //System.out.println(SearchAgent.getHits("bing", "(\"muito bom\" OR \"legal\" OR \"recomendo\")"));
+        //System.out.println(SearchAgent.getHits("bing", "(\"ruim\" OR \"chato\" OR \"cansativo\" OR \"não recomendo\")"));
     }
 
 }

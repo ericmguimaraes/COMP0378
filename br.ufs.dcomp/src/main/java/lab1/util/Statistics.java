@@ -51,7 +51,7 @@ public class Statistics {
 
     public void printRecallAndPrecision(){
         DecimalFormat df = new DecimalFormat("#.00");
-        System.out.println("Recall: "+df.format(getRecall())+"% Precision:"+df.format(getPrecision())+"%");
+        System.out.println("Recall: "+df.format(getRecall())+"% Precision: "+df.format(getPrecision())+"%");
     }
 
 }

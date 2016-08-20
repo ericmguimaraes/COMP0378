@@ -22,9 +22,13 @@ public class SearchAgent {
     // movie lists for get reviews
     static final String[] fMovies = {"indie-game-the-movie-t40317", "a-viagem-de-chihiro-t1246", "cidadaoquatro-t109116", "waking-life-t1414", "dogville-t4855", "interestelar-t27814",
             "sr-ninguem-t12536", "masculino-feminino-t12255", "edukators-os-educadores-t4890", "birdman-ou-a-inesperada-virtude-da-ignorancia-t70545", "o-escafandro-e-a-borboleta-t1887",
-            "cidade-de-deus-t4649", "scott-pilgrim-contra-o-mundo-t12165", "desconstruindo-harry-t2491", "efeito-borboleta-t4891", "clube-da-luta-t318", "ela-t52084"};
+            "cidade-de-deus-t4649", "scott-pilgrim-contra-o-mundo-t12165", "desconstruindo-harry-t2491", "efeito-borboleta-t4891", "clube-da-luta-t318", "ela-t52084", "truque-de-mestre-o-segundo-ato-t84150",
+            "caca-fantasmas-t14054", "agnus-dei-t193956", "julieta-t114450", "invocacao-do-mal-2-t82649", "a-era-do-gelo-o-big-bang-t90823", "x-men-apocalipse-t90078", "dois-caras-legais-t101163",
+            "nise-o-coracao-da-loucura-t53751", "truque-de-mestre-o-segundo-ato-t84150", "angry-birds-o-filme-t68828", "as-tartarugas-ninja-fora-das-sombras-t104509", "o-sono-da-morte-t93024",
+            "jogo-do-dinheiro-t84097", "as-tartarugas-ninja-fora-das-sombras-t104509"};
     static final String[] acMovies = {"226260", "980", "125828", "210222", "39187", "123734", "27442", "10568", "146349", "448", "196960", "18598", "225953", "10126",
-            "14264", "19776", "56833"};
+            "14264", "19776", "56833", "128188", "180343", "230327", "231615", "209062", "240228", "197814", "226078", "234427", "225958", "126155", "219262", "215143",
+            "240685", "181061"};
 
     public static long getHits (String target, String search) throws IOException {
         Long hits = Long.valueOf(0);

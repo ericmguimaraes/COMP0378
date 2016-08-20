@@ -47,6 +47,8 @@ public class Classification {
             }
         }
 
+        tokens = PostTokenizer.refineTokens(tokens);
+
         tokens.forEach((token) -> {
             if(token.getPOSTag().contentEquals("adj") || token.getLexeme().contentEquals("adv")) {
                 phrases.add(token.getLexeme());
